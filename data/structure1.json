@@ -1,0 +1,50 @@
+[
+  {
+    "number": "S1.1.1",
+    "question": "Which statement describes a mixture?",
+    "url": "",
+    "scraped": "Which statement describes a mixture?\nA. It has a fixed composition.\nB. Its components can be separated by physical means.\nC. It can only contain two substances.\nD. It forms a new substance when components are combined.\n\nMarkscheme\nB\nA mixture consists of two or more substances physically combined. Unlike compounds, the components of a mixture retain their individual properties and can be separated by physical means such as filtration, distillation, or chromatography."
+  },
+  {
+    "number": "S1.1.2",
+    "question": "What is the number of protons in an atom of carbon-14?",
+    "url": "",
+    "scraped": "What is the number of protons in an atom of carbon-14?\nA. 6\nB. 8\nC. 14\nD. 20\n\nMarkscheme\nA\nCarbon always has 6 protons (atomic number = 6). The mass number 14 refers to the total of protons and neutrons, so carbon-14 has 6 protons and 8 neutrons."
+  },
+  {
+    "number": "S1.1.3",
+    "question": "Which property is used to distinguish between elements, compounds, and mixtures?",
+    "url": "",
+    "scraped": "Which property is used to distinguish between elements, compounds, and mixtures?\nA. Physical state at room temperature\nB. Colour and appearance\nC. Composition and bonding\nD. Density and solubility\n\nMarkscheme\nC\nElements consist of one type of atom, compounds contain two or more elements chemically bonded in fixed ratios, and mixtures contain substances not chemically combined. Composition and bonding are the defining distinguishing characteristics."
+  },
+  {
+    "number": "S1.2.1",
+    "question": "An element has relative atomic mass 35.5. Which statement best explains this value?",
+    "url": "",
+    "scraped": "An element has relative atomic mass 35.5. Which statement best explains this value?\nA. The element has 35.5 protons.\nB. The element exists as two isotopes with masses 35 and 36 in equal amounts.\nC. The element is a mixture of isotopes with different abundances.\nD. The element has 35 protons and 0.5 neutrons on average.\n\nMarkscheme\nC\nRelative atomic mass is the weighted average of the masses of all naturally occurring isotopes. A value of 35.5 indicates the element (chlorine) exists as isotopes of different masses present in different natural abundances."
+  },
+  {
+    "number": "S1.2.2",
+    "question": "What is the molar mass of glucose, C6H12O6?",
+    "url": "",
+    "scraped": "What is the molar mass of glucose, C6H12O6?\nA. 180 g mol-1\nB. 24 g mol-1\nC. 96 g mol-1\nD. 168 g mol-1\n\nMarkscheme\nA\nMolar mass = (6 × 12) + (12 × 1) + (6 × 16) = 72 + 12 + 96 = 180 g mol-1."
+  },
+  {
+    "number": "S1.3.1",
+    "question": "Which electron configuration represents a ground state atom of nitrogen?",
+    "url": "",
+    "scraped": "Which electron configuration represents a ground state atom of nitrogen?\nA. 1s2 2s2 2p3\nB. 1s2 2s2 2p2 3s1\nC. 1s2 2p5\nD. 1s2 2s1 2p4\n\nMarkscheme\nA\nNitrogen has atomic number 7, so 7 electrons. In the ground state, electrons fill orbitals in order of increasing energy: 1s2 2s2 2p3."
+  },
+  {
+    "number": "S1.3.2",
+    "question": "What is the maximum number of electrons that can occupy the second energy level?",
+    "url": "",
+    "scraped": "What is the maximum number of electrons that can occupy the second energy level?\nA. 2\nB. 6\nC. 8\nD. 18\n\nMarkscheme\nC\nThe second energy level contains one 2s subshell (max 2 electrons) and one 2p subshell (max 6 electrons), giving a total maximum of 8 electrons."
+  },
+  {
+    "number": "S1.4.1",
+    "question": "Which series of elements shows an increasing trend in first ionization energy?",
+    "url": "",
+    "scraped": "Which series of elements shows an increasing trend in first ionization energy?\nA. Na, Mg, Al\nB. Li, Na, K\nC. N, O, F\nD. Cl, Br, I\n\nMarkscheme\nA\nAcross a period from left to right, first ionization energy generally increases due to increasing nuclear charge. Na, Mg, Al are in period 3 in increasing atomic number order, so first ionization energy generally increases (with some exceptions)."
+  }
+]

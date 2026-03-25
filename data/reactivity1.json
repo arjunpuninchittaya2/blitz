@@ -1,0 +1,50 @@
+[
+  {
+    "number": "R1.1.1",
+    "question": "Which statement correctly describes the periodic law?",
+    "url": "",
+    "scraped": "Which statement correctly describes the periodic law?\nA. Elements are arranged in order of increasing atomic mass.\nB. Properties of elements repeat at regular intervals when arranged by atomic number.\nC. The chemical properties of elements repeat every 8 elements.\nD. Metals and non-metals alternate periodically.\n\nMarkscheme\nB\nThe periodic law states that the physical and chemical properties of elements are a periodic function of their atomic numbers. When elements are arranged in order of increasing atomic number, similar properties recur at regular intervals."
+  },
+  {
+    "number": "R1.1.2",
+    "question": "Which trend is observed when moving across period 3 from left to right?",
+    "url": "",
+    "scraped": "Which trend is observed when moving across period 3 from left to right?\nA. Atomic radius increases.\nB. Electronegativity decreases.\nC. First ionization energy generally increases.\nD. Metallic character increases.\n\nMarkscheme\nC\nAcross a period from left to right, nuclear charge increases while the number of shielding inner electrons remains the same. This results in electrons being held more tightly, increasing first ionization energy. Atomic radius decreases and electronegativity increases across a period."
+  },
+  {
+    "number": "R1.2.1",
+    "question": "What is the oxidation state of chromium in K2Cr2O7?",
+    "url": "",
+    "scraped": "What is the oxidation state of chromium in K2Cr2O7?\nA. +3\nB. +4\nC. +6\nD. +7\n\nMarkscheme\nC\nIn K2Cr2O7: K has oxidation state +1, O has -2. Let Cr = x.\n2(+1) + 2x + 7(-2) = 0\n2 + 2x - 14 = 0\n2x = 12\nx = +6\nChromium has oxidation state +6."
+  },
+  {
+    "number": "R1.2.2",
+    "question": "In the reaction Zn + 2HCl → ZnCl2 + H2, which species is oxidized?",
+    "url": "",
+    "scraped": "In the reaction Zn + 2HCl → ZnCl2 + H2, which species is oxidized?\nA. Zn\nB. H+\nC. Cl-\nD. ZnCl2\n\nMarkscheme\nA\nZinc is oxidized: Zn goes from oxidation state 0 to +2 (loses electrons). Hydrogen is reduced: H goes from +1 in HCl to 0 in H2 (gains electrons). Oxidation is the loss of electrons (OIL: Oxidation Is Loss)."
+  },
+  {
+    "number": "R1.3.1",
+    "question": "Which equation represents a neutralization reaction?",
+    "url": "",
+    "scraped": "Which equation represents a neutralization reaction?\nA. CaCO3 → CaO + CO2\nB. 2Na + 2H2O → 2NaOH + H2\nC. HCl + NaOH → NaCl + H2O\nD. CH4 + 2O2 → CO2 + 2H2O\n\nMarkscheme\nC\nNeutralization is the reaction between an acid and a base to produce a salt and water. HCl (acid) + NaOH (base) → NaCl (salt) + H2O (water) is a classic neutralization reaction."
+  },
+  {
+    "number": "R1.3.2",
+    "question": "What is the pH of a 0.01 mol dm-3 solution of HCl at 25 °C?",
+    "url": "",
+    "scraped": "What is the pH of a 0.01 mol dm-3 solution of HCl at 25 °C?\nA. 1\nB. 2\nC. 12\nD. 0.01\n\nMarkscheme\nB\nHCl is a strong acid and fully dissociates. [H+] = 0.01 mol dm-3 = 10-2 mol dm-3.\npH = -log[H+] = -log(10-2) = 2."
+  },
+  {
+    "number": "R1.4.1",
+    "question": "Which statement about catalysts is correct?",
+    "url": "",
+    "scraped": "Which statement about catalysts is correct?\nA. A catalyst increases the activation energy.\nB. A catalyst is consumed during the reaction.\nC. A catalyst provides an alternative reaction pathway with lower activation energy.\nD. A catalyst only affects the rate of the forward reaction.\n\nMarkscheme\nC\nA catalyst provides an alternative reaction pathway with a lower activation energy. This increases the rate of both forward and reverse reactions equally, without being consumed in the process. The equilibrium position is unchanged."
+  },
+  {
+    "number": "R1.4.2",
+    "question": "Which graph shows the correct Maxwell-Boltzmann distribution for two temperatures T1 < T2?",
+    "url": "",
+    "scraped": "Which graph shows the correct Maxwell-Boltzmann distribution for two temperatures T1 < T2?\nA. T2 has a higher peak and shifts to the right.\nB. T2 has a lower peak, broader distribution, and shifts to the right.\nC. T1 has a lower peak and both distributions are the same width.\nD. T2 has the same peak height but a wider distribution.\n\nMarkscheme\nB\nAt higher temperature T2: the distribution shifts to higher kinetic energies (right), the peak height decreases (fewer molecules at the most probable speed), and the curve becomes broader. The total area under the curve remains constant as the total number of molecules is unchanged."
+  }
+]

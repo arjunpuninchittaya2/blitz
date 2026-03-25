@@ -1,0 +1,44 @@
+[
+  {
+    "number": "R3.1.1",
+    "question": "What is the IUPAC name of CH3CH2CH2OH?",
+    "url": "",
+    "scraped": "What is the IUPAC name of CH3CH2CH2OH?\nA. Ethanol\nB. Propan-1-ol\nC. Propan-2-ol\nD. Butanol\n\nMarkscheme\nB\nThe compound CH3CH2CH2OH has a 3-carbon chain (propane) with an -OH group on carbon 1. The IUPAC name is propan-1-ol. The position of the hydroxyl group is specified by the lowest possible locant."
+  },
+  {
+    "number": "R3.1.2",
+    "question": "Which functional group is present in a carboxylic acid?",
+    "url": "",
+    "scraped": "Which functional group is present in a carboxylic acid?\nA. -OH\nB. -CHO\nC. -COOH\nD. -COO-\n\nMarkscheme\nC\nCarboxylic acids contain the -COOH (carboxyl) functional group, which consists of a carbonyl group (C=O) and a hydroxyl group (-OH) attached to the same carbon. The -CHO group is found in aldehydes, -OH alone is in alcohols."
+  },
+  {
+    "number": "R3.2.1",
+    "question": "Which type of reaction converts an alkene to an alkane?",
+    "url": "",
+    "scraped": "Which type of reaction converts an alkene to an alkane?\nA. Substitution\nB. Elimination\nC. Addition\nD. Condensation\n\nMarkscheme\nC\nAn addition reaction converts an alkene to an alkane by adding H2 across the double bond (hydrogenation). For example, CH2=CH2 + H2 → CH3CH3. Addition reactions are characteristic of unsaturated compounds (alkenes and alkynes)."
+  },
+  {
+    "number": "R3.2.2",
+    "question": "What is produced when ethanol undergoes dehydration?",
+    "url": "",
+    "scraped": "What is produced when ethanol undergoes dehydration?\nA. Ethane\nB. Ethanoic acid\nC. Ethene\nD. Ethanal\n\nMarkscheme\nC\nDehydration of ethanol (elimination reaction) removes water from the molecule to produce ethene (CH2=CH2). This is achieved by heating ethanol with concentrated H2SO4 at 170°C. The -OH and an adjacent H are removed."
+  },
+  {
+    "number": "R3.3.1",
+    "question": "Which property of benzene suggests it has delocalized electrons?",
+    "url": "",
+    "scraped": "Which property of benzene suggests it has delocalized electrons?\nA. It undergoes addition reactions readily.\nB. All C-C bond lengths are equal and intermediate between single and double bonds.\nC. It has 6 carbon atoms.\nD. It burns with a sooty flame.\n\nMarkscheme\nB\nIn benzene, all six C-C bond lengths are equal (140 pm), intermediate between a C-C single bond (154 pm) and a C=C double bond (134 pm). This equal bond length indicates electron delocalization. If benzene had alternating single and double bonds (Kekulé structure), different bond lengths would be expected."
+  },
+  {
+    "number": "R3.3.2",
+    "question": "What is the reaction mechanism for the reaction of benzene with bromine in the presence of a Lewis acid catalyst?",
+    "url": "",
+    "scraped": "What is the reaction mechanism for the reaction of benzene with bromine in the presence of a Lewis acid catalyst?\nA. Free radical substitution\nB. Electrophilic addition\nC. Nucleophilic substitution\nD. Electrophilic substitution\n\nMarkscheme\nD\nBenzene undergoes electrophilic aromatic substitution (EAS). The Lewis acid catalyst (e.g., AlBr3 or FeBr3) polarizes the Br-Br bond, generating an electrophile (Br+). The electrophile attacks the electron-rich benzene ring, and a hydrogen is lost to restore aromaticity. Addition would destroy the stable aromatic system."
+  },
+  {
+    "number": "R3.4.1",
+    "question": "Which statement about SN1 and SN2 reactions is correct?",
+    "url": "",
+    "scraped": "Which statement about SN1 and SN2 reactions is correct?\nA. SN1 reactions proceed with inversion of configuration.\nB. SN2 reactions form a carbocation intermediate.\nC. SN1 reactions are favored by tertiary substrates.\nD. SN2 reactions are bimolecular and proceed via a carbocation.\n\nMarkscheme\nC\nSN1 reactions are favored by tertiary (3°) substrates because tertiary carbocations are stabilized by the inductive effect of three alkyl groups. SN1 proceeds via a carbocation intermediate (not SN2). SN2 reactions proceed with inversion of configuration (Walden inversion) and are favored by primary substrates."
+  }
+]
