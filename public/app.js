@@ -34,7 +34,6 @@
   let queue             = [];   // Shuffled indices
   let currentIndex      = 0;    // Position in queue
   let markschemeVisible = false;
-  let totalSeen         = 0;
 
   // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -204,8 +203,13 @@
     // Hide markscheme
     hideMarkscheme();
 
+    // Clear any incorrect-answer marks from previous interaction
+    choicesList.querySelectorAll(".choice-item").forEach((item) => {
+      item.classList.remove("incorrect");
+    });
+
     // Update counter
-    questionCounter.textContent = `${totalSeen} / ${questions.length}`;
+    questionCounter.textContent = `${currentIndex + 1} / ${questions.length}`;
   }
 
   function showMarkscheme(q) {
@@ -234,9 +238,9 @@
     answerDisplay.textContent = "";
     markschemeText.textContent = "";
 
-    // Remove highlight
+    // Remove highlight and incorrect marks
     choicesList.querySelectorAll(".choice-item").forEach((item) => {
-      item.classList.remove("correct");
+      item.classList.remove("correct", "incorrect");
     });
   }
 
@@ -250,7 +254,6 @@
   function goNext() {
     if (!questions.length) return;
     currentIndex = (currentIndex + 1) % queue.length;
-    totalSeen = Math.min(totalSeen + 1, questions.length);
     animateCard("forward", () => renderQuestion(currentQuestion()));
   }
 
@@ -297,7 +300,6 @@
       questions = data;
       queue = shuffle(Array.from({ length: questions.length }, (_, i) => i));
       currentIndex = 0;
-      totalSeen = 1;
 
       hideOverlay(loadingOverlay);
       showScreen(practiceScreen);
@@ -313,7 +315,6 @@
     questions = [];
     queue = [];
     currentIndex = 0;
-    totalSeen = 0;
     accuracyDisplay.textContent = "—";
     questionCounter.textContent = "0 / 0";
     hideMarkscheme();
@@ -390,15 +391,16 @@
     // Reveal the markscheme (show correct answer)
     showMarkscheme(q);
 
-    // Also highlight the chosen letter distinctly if wrong
-    const items = choicesList.querySelectorAll(".choice-item");
-    items.forEach((item) => {
-      const label = item.querySelector(".choice-label");
-      if (label && label.textContent === letter && letter !== q.answer) {
-        // Wrong selection: slightly dim the item
-        item.style.opacity = "0.55";
-      }
-    });
+    // Mark the chosen letter as incorrect if it doesn't match the answer
+    if (letter !== q.answer) {
+      const items = choicesList.querySelectorAll(".choice-item");
+      items.forEach((item) => {
+        const label = item.querySelector(".choice-label");
+        if (label && label.textContent === letter) {
+          item.classList.add("incorrect");
+        }
+      });
+    }
   }
 
   // ── Init ───────────────────────────────────────────────────────────────────

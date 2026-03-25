@@ -350,6 +350,12 @@ body {
   color: var(--black);
 }
 
+.choice-item.incorrect {
+  opacity: 0.45;
+  text-decoration: line-through;
+  text-decoration-color: var(--gray-400);
+}
+
 .choice-label {
   font-family: var(--mono);
   font-size: 0.78rem;
