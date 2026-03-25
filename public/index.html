@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blitz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Splash / Section selector ─────────────────────────────────────── -->
+  <div id="splash" class="screen active">
+    <header class="splash-header">
+      <h1 class="wordmark">Blitz</h1>
+      <p class="tagline">IB Chemistry &middot; Question Bank</p>
+    </header>
+
+    <main class="selector-container">
+      <p class="selector-label">Select sections to practise</p>
+
+      <div class="section-group">
+        <p class="group-title">Structure</p>
+        <label class="check-item">
+          <input type="checkbox" value="structure1" />
+          <span class="check-box"></span>
+          <span class="check-text">Structure 1</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="structure2" />
+          <span class="check-box"></span>
+          <span class="check-text">Structure 2</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="structure3" />
+          <span class="check-box"></span>
+          <span class="check-text">Structure 3</span>
+        </label>
+      </div>
+
+      <div class="section-group">
+        <p class="group-title">Reactivity</p>
+        <label class="check-item">
+          <input type="checkbox" value="reactivity1" />
+          <span class="check-box"></span>
+          <span class="check-text">Reactivity 1</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="reactivity2" />
+          <span class="check-box"></span>
+          <span class="check-text">Reactivity 2</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="reactivity3" />
+          <span class="check-box"></span>
+          <span class="check-text">Reactivity 3</span>
+        </label>
+      </div>
+
+      <button id="start-btn" class="btn-primary" disabled>Start Practice</button>
+      <p id="selection-error" class="error-msg" hidden>Please select at least one section.</p>
+    </main>
+  </div>
+
+  <!-- ── Practice screen ───────────────────────────────────────────────── -->
+  <div id="practice" class="screen">
+
+    <nav class="top-bar">
+      <button id="back-btn" class="btn-icon" aria-label="Back to section selector" title="Back">
+        <!-- Left arrow SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+
+      <div class="progress-info">
+        <span id="question-counter">0 / 0</span>
+        <span class="separator"></span>
+        <span id="accuracy-display">—</span>
+      </div>
+
+      <button id="next-btn" class="btn-icon" aria-label="Next question" title="Next question (→)">
+        <!-- Right arrow SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </nav>
+
+    <main class="card-container">
+      <article id="question-card" class="card" role="main">
+
+        <div class="card-meta">
+          <span id="question-code" class="question-code"></span>
+        </div>
+
+        <p id="question-text" class="question-text"></p>
+
+        <ol id="choices-list" class="choices-list" aria-label="Answer choices"></ol>
+
+        <div id="markscheme-section" class="markscheme" hidden>
+          <div class="markscheme-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Markscheme</span>
+          </div>
+          <p id="answer-display" class="answer-display"></p>
+          <p id="markscheme-text" class="markscheme-text"></p>
+        </div>
+
+        <div class="card-hint">
+          Press <kbd>Enter</kbd> to reveal markscheme &nbsp;&middot;&nbsp; <kbd>&larr;</kbd><kbd>&rarr;</kbd> to navigate
+        </div>
+
+      </article>
+    </main>
+
+  </div>
+
+  <!-- ── Empty-state overlay ───────────────────────────────────────────── -->
+  <div id="empty-overlay" class="overlay" hidden>
+    <div class="overlay-box">
+      <p class="overlay-title">No questions found</p>
+      <p class="overlay-body">The selected sections returned no questions. Please go back and try different sections.</p>
+      <button id="empty-back-btn" class="btn-primary">Go Back</button>
+    </div>
+  </div>
+
+  <!-- ── Loading overlay ───────────────────────────────────────────────── -->
+  <div id="loading-overlay" class="overlay" hidden>
+    <div class="overlay-box">
+      <div class="spinner" aria-label="Loading"></div>
+      <p class="overlay-body">Loading questions…</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

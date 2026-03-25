@@ -1,0 +1,38 @@
+[
+  {
+    "number": "R2.1.1",
+    "question": "Which statement about enthalpy of formation is correct?",
+    "url": "",
+    "scraped": "Which statement about enthalpy of formation is correct?\nA. The standard enthalpy of formation of all elements is -1.\nB. The standard enthalpy of formation refers to forming one mole of compound from its elements in standard states.\nC. It is always exothermic.\nD. It cannot be measured directly.\n\nMarkscheme\nB\nThe standard enthalpy of formation (delta Hf) is the enthalpy change when one mole of a compound is formed from its constituent elements in their standard states at 298 K and 100 kPa. For elements in their standard state, delta Hf = 0 by definition."
+  },
+  {
+    "number": "R2.1.2",
+    "question": "Using bond enthalpies, calculate the enthalpy of the reaction H2 + Cl2 → 2HCl. Bond enthalpies: H-H = 436 kJ mol-1, Cl-Cl = 243 kJ mol-1, H-Cl = 431 kJ mol-1.",
+    "url": "",
+    "scraped": "Using bond enthalpies, calculate the enthalpy of the reaction H2 + Cl2 → 2HCl. Bond enthalpies: H-H = 436 kJ mol-1, Cl-Cl = 243 kJ mol-1, H-Cl = 431 kJ mol-1.\nA. +183 kJ mol-1\nB. -183 kJ mol-1\nC. +1110 kJ mol-1\nD. -862 kJ mol-1\n\nMarkscheme\nB\nEnergy input (bonds broken) = H-H + Cl-Cl = 436 + 243 = 679 kJ mol-1\nEnergy released (bonds formed) = 2 × H-Cl = 2 × 431 = 862 kJ mol-1\nDelta H = bonds broken - bonds formed = 679 - 862 = -183 kJ mol-1"
+  },
+  {
+    "number": "R2.2.1",
+    "question": "What does a large equilibrium constant (K >> 1) indicate?",
+    "url": "",
+    "scraped": "What does a large equilibrium constant (K >> 1) indicate?\nA. The reaction is very slow.\nB. At equilibrium, products predominate over reactants.\nC. At equilibrium, reactants predominate over products.\nD. The forward reaction is endothermic.\n\nMarkscheme\nB\nA large equilibrium constant (K >> 1) indicates that at equilibrium, the concentrations of products are much greater than the concentrations of reactants. It describes the position of equilibrium, not the rate of reaction."
+  },
+  {
+    "number": "R2.2.2",
+    "question": "For the equilibrium PCl5(g) ⇌ PCl3(g) + Cl2(g), what is the expression for Kc?",
+    "url": "",
+    "scraped": "For the equilibrium PCl5(g) ⇌ PCl3(g) + Cl2(g), what is the expression for Kc?\nA. [PCl5] / ([PCl3][Cl2])\nB. [PCl3][Cl2] / [PCl5]\nC. [PCl3] + [Cl2] / [PCl5]\nD. [PCl5]^2 / ([PCl3][Cl2])\n\nMarkscheme\nB\nKc = [products] / [reactants] with each concentration raised to the power of its stoichiometric coefficient. For PCl5(g) ⇌ PCl3(g) + Cl2(g), Kc = [PCl3][Cl2] / [PCl5]."
+  },
+  {
+    "number": "R2.3.1",
+    "question": "Which statement about a buffer solution is correct?",
+    "url": "",
+    "scraped": "Which statement about a buffer solution is correct?\nA. A buffer maintains a constant pH regardless of the amount of acid or base added.\nB. A buffer resists changes in pH when small amounts of acid or base are added.\nC. A buffer solution always has a pH of 7.\nD. A buffer only works for acidic solutions.\n\nMarkscheme\nB\nA buffer solution resists changes in pH when small amounts of acid or base are added. It does not maintain a perfectly constant pH, and its capacity is limited. Buffers can be acidic or basic, and the pH of a buffer depends on the pKa of the weak acid and the ratio of salt to acid."
+  },
+  {
+    "number": "R2.3.2",
+    "question": "What is the pH of a buffer containing 0.1 mol dm-3 acetic acid and 0.1 mol dm-3 sodium acetate? (Ka of acetic acid = 1.8 × 10-5)",
+    "url": "",
+    "scraped": "What is the pH of a buffer containing 0.1 mol dm-3 acetic acid and 0.1 mol dm-3 sodium acetate? (Ka of acetic acid = 1.8 × 10-5)\nA. 7.00\nB. 4.74\nC. 5.26\nD. 9.26\n\nMarkscheme\nB\nUsing Henderson-Hasselbalch: pH = pKa + log([A-]/[HA])\npKa = -log(1.8 × 10-5) = 4.74\npH = 4.74 + log(0.1/0.1) = 4.74 + log(1) = 4.74 + 0 = 4.74"
+  }
+]

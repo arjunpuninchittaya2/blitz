@@ -1,0 +1,38 @@
+[
+  {
+    "number": "S3.1.1",
+    "question": "Which statement about enthalpy change is correct?",
+    "url": "",
+    "scraped": "Which statement about enthalpy change is correct?\nA. An exothermic reaction has a positive enthalpy change.\nB. An endothermic reaction absorbs energy from the surroundings.\nC. Enthalpy change does not depend on the amount of substance.\nD. Enthalpy change equals the internal energy change at constant volume.\n\nMarkscheme\nB\nIn an endothermic reaction, energy is absorbed from the surroundings, causing the surroundings to cool down. The enthalpy change (delta H) is positive for endothermic reactions. Exothermic reactions release energy and have negative delta H values."
+  },
+  {
+    "number": "S3.1.2",
+    "question": "The standard enthalpy of combustion of methane is -890 kJ mol-1. What is the heat released when 8 g of methane burns completely?",
+    "url": "",
+    "scraped": "The standard enthalpy of combustion of methane is -890 kJ mol-1. What is the heat released when 8 g of methane burns completely?\nA. 445 kJ\nB. 890 kJ\nC. 7120 kJ\nD. 1780 kJ\n\nMarkscheme\nA\nMolar mass of CH4 = 16 g mol-1. Moles of CH4 = 8/16 = 0.5 mol. Heat released = 0.5 mol × 890 kJ mol-1 = 445 kJ."
+  },
+  {
+    "number": "S3.2.1",
+    "question": "Which condition does NOT affect the rate of a chemical reaction?",
+    "url": "",
+    "scraped": "Which condition does NOT affect the rate of a chemical reaction?\nA. Temperature\nB. Concentration of reactants\nC. State symbol in the equation\nD. Presence of a catalyst\n\nMarkscheme\nC\nThe state symbol in a chemical equation (s, l, g, aq) is a representation tool and does not by itself affect the rate of reaction. Temperature, concentration, and catalysts all directly influence how frequently and effectively reactant particles collide."
+  },
+  {
+    "number": "S3.2.2",
+    "question": "What is the effect of increasing temperature on a reaction rate?",
+    "url": "",
+    "scraped": "What is the effect of increasing temperature on a reaction rate?\nA. Only collision frequency increases.\nB. Only the fraction of particles with energy greater than Ea increases.\nC. Both collision frequency and the fraction of particles exceeding Ea increase.\nD. The activation energy decreases.\n\nMarkscheme\nC\nIncreasing temperature increases both the frequency of collisions between particles and the fraction of particles that have kinetic energy exceeding the activation energy (Ea). Both effects contribute to the increased reaction rate. The activation energy itself is not changed by temperature."
+  },
+  {
+    "number": "S3.3.1",
+    "question": "A reversible reaction reaches equilibrium. What happens when the concentration of a reactant is increased?",
+    "url": "",
+    "scraped": "A reversible reaction reaches equilibrium. What happens when the concentration of a reactant is increased?\nA. The equilibrium constant K increases.\nB. The reaction shifts in the forward direction.\nC. The rate of the reverse reaction increases immediately.\nD. The equilibrium constant K decreases.\n\nMarkscheme\nB\nAccording to Le Chatelier's principle, when the concentration of a reactant is increased, the system responds by shifting the equilibrium position in the forward direction to reduce the stress (consume the added reactant). The equilibrium constant K remains unchanged as it depends only on temperature."
+  },
+  {
+    "number": "S3.3.2",
+    "question": "For the reaction N2(g) + 3H2(g) ⇌ 2NH3(g), what is the effect of increasing pressure?",
+    "url": "",
+    "scraped": "For the reaction N2(g) + 3H2(g) ⇌ 2NH3(g), what is the effect of increasing pressure?\nA. The equilibrium shifts towards the reactants.\nB. The equilibrium shifts towards the products.\nC. No change in equilibrium position.\nD. The equilibrium constant increases.\n\nMarkscheme\nB\nIncreasing pressure shifts the equilibrium to the side with fewer moles of gas. Reactants have 4 moles of gas (1 + 3) and products have 2 moles. Therefore the equilibrium shifts towards the products (right), increasing NH3 yield."
+  }
+]

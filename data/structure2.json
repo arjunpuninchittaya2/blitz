@@ -1,0 +1,44 @@
+[
+  {
+    "number": "S2.1.1",
+    "question": "Which type of bonding is present in sodium chloride?",
+    "url": "",
+    "scraped": "Which type of bonding is present in sodium chloride?\nA. Covalent\nB. Metallic\nC. Ionic\nD. Hydrogen\n\nMarkscheme\nC\nSodium chloride (NaCl) is an ionic compound formed by the transfer of electrons from sodium (a metal) to chlorine (a non-metal), resulting in electrostatic attraction between oppositely charged ions."
+  },
+  {
+    "number": "S2.1.2",
+    "question": "What is the shape of a water molecule?",
+    "url": "",
+    "scraped": "What is the shape of a water molecule?\nA. Linear\nB. Trigonal planar\nC. Bent (V-shaped)\nD. Tetrahedral\n\nMarkscheme\nC\nWater has 2 bonding pairs and 2 lone pairs around the central oxygen atom. VSEPR theory predicts that the lone pairs repel more strongly, resulting in a bent or V-shaped geometry with a bond angle of approximately 104.5 degrees."
+  },
+  {
+    "number": "S2.2.1",
+    "question": "Which compound has the highest boiling point?",
+    "url": "",
+    "scraped": "Which compound has the highest boiling point?\nA. CH4\nB. HF\nC. H2S\nD. PH3\n\nMarkscheme\nB\nHF has the highest boiling point because fluorine is the most electronegative element, creating strong hydrogen bonds. Although HF only forms one hydrogen bond per molecule (compared to water's two), the F-H bond is particularly strong."
+  },
+  {
+    "number": "S2.2.2",
+    "question": "Which intermolecular force is present in all molecular substances?",
+    "url": "",
+    "scraped": "Which intermolecular force is present in all molecular substances?\nA. Hydrogen bonding\nB. Dipole-dipole interactions\nC. London dispersion forces\nD. Ionic interactions\n\nMarkscheme\nC\nLondon dispersion forces (also called van der Waals forces or induced dipole-induced dipole forces) arise from temporary fluctuations in electron density and are present in all molecular substances, whether polar or non-polar."
+  },
+  {
+    "number": "S2.3.1",
+    "question": "Which molecule is polar?",
+    "url": "",
+    "scraped": "Which molecule is polar?\nA. CO2\nB. CCl4\nC. BF3\nD. CHCl3\n\nMarkscheme\nD\nCHCl3 (chloroform) is polar because it has an asymmetrical arrangement of atoms. The C-H and C-Cl bond dipoles do not cancel, resulting in a net molecular dipole moment. CO2, CCl4, and BF3 are all symmetrical and have no net dipole."
+  },
+  {
+    "number": "S2.4.1",
+    "question": "What type of solid is diamond?",
+    "url": "",
+    "scraped": "What type of solid is diamond?\nA. Ionic\nB. Metallic\nC. Molecular\nD. Covalent network\n\nMarkscheme\nD\nDiamond is a covalent network solid where each carbon atom is covalently bonded to four other carbon atoms in a tetrahedral arrangement, forming an extensive three-dimensional lattice. This accounts for its exceptional hardness and high melting point."
+  },
+  {
+    "number": "S2.4.2",
+    "question": "Which property is characteristic of metallic bonding?",
+    "url": "",
+    "scraped": "Which property is characteristic of metallic bonding?\nA. High melting point only\nB. Electrical conductivity in solid and liquid state\nC. Brittleness\nD. Poor thermal conductivity\n\nMarkscheme\nB\nMetals conduct electricity in both solid and liquid states because the delocalised electrons (sea of electrons) are free to move. In ionic compounds, conduction only occurs when molten or dissolved in water."
+  }
+]
