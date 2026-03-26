@@ -23,6 +23,7 @@
   const accuracyDisplay   = document.getElementById("accuracy-display");
   const questionCard      = document.getElementById("question-card");
   const questionCode      = document.getElementById("question-code");
+  const maxMarkEl         = document.getElementById("max-mark");
   const questionText      = document.getElementById("question-text");
   const choicesList       = document.getElementById("choices-list");
   const markschemeSection = document.getElementById("markscheme-section");
@@ -67,10 +68,33 @@
    */
   function parseQuestion(raw) {
     const scraped = raw.scraped || "";
+
+    // Extract max mark from "[Maximum mark: X]" (may use non-breaking spaces)
+    const maxMarkMatch = scraped.match(/\[Maximum[\s\u00a0]mark:[\s\u00a0]*(\d+)\]/i);
+    const maxMark = maxMarkMatch ? parseInt(maxMarkMatch[1], 10) : null;
+
     const choiceRegex = /(?=\bA\.|\bB\.|\bC\.|\bD\.)/;
     const parts = scraped.split(choiceRegex);
 
-    const questionTextParsed = (parts[0] || raw.question || "").trim();
+    let questionText = (parts[0] || raw.question || "").trim();
+
+    // Strip markscheme section (bleeds in for non-MCQ questions)
+    questionText = questionText.replace(/\n?Markscheme[\s\S]*/i, "").trim();
+
+    // Strip preamble: everything up to and including the question ID line
+    if (raw.number) {
+      const escapedId = raw.number.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      questionText = questionText.replace(new RegExp(`^[\\s\\S]*?${escapedId}\\s*\\n?`), "");
+    }
+
+    // Strip part indicator at start like "(a)", "(a(ii))", "(b(iii))"
+    questionText = questionText.replace(/^\s*\([a-z]\d*(?:\([ivxlcdm]+\))?\)\s*/i, "");
+
+    // Strip [N] mark indicators like "[2]"
+    questionText = questionText.replace(/\[\d+\]/g, "");
+
+    // Clean up whitespace
+    questionText = questionText.replace(/\n+/g, " ").trim();
 
     const choices = [];
     for (let i = 1; i < parts.length; i++) {
@@ -92,13 +116,96 @@
       if (msRaw) markscheme = msRaw[1].trim();
     }
 
+    // Strip examiners report from markscheme (may appear at start or after newline)
+    markscheme = markscheme.replace(/(^|\n)\s*Examiners\s+report[\s\S]*/i, "").trim();
+
     return {
       number: raw.number || "",
-      questionText: questionTextParsed.replace(/\n+/g, " ").trim(),
+      questionText,
       choices,
       answer,
       markscheme,
+      maxMark,
     };
+  }
+
+  // ── Multipart grouping helpers ─────────────────────────────────────────────
+
+  function getBaseId(number) {
+    const segs = number.split(".");
+    const last = segs[segs.length - 1];
+
+    if (/^x{0,3}(?:ix|iv|v?i{0,3})$/i.test(last) && last !== "") {
+      const prefix = segs.slice(0, -1);
+      const prevLast = prefix[prefix.length - 1];
+      const baseOfPrev = (prevLast.match(/^(\d*)/) || ["", ""])[1];
+      if (baseOfPrev) return prefix.slice(0, -1).concat(baseOfPrev).join(".");
+      return prefix.slice(0, -1).join(".");
+    }
+
+    if (/[a-z]/i.test(last)) {
+      const baseOfLast = (last.match(/^(\d*)/) || ["", ""])[1];
+      if (baseOfLast) return segs.slice(0, -1).concat(baseOfLast).join(".");
+      return segs.slice(0, -1).join(".");
+    }
+
+    return null;
+  }
+
+  function getPartLabel(number, baseId) {
+    let part = number.slice(baseId.length);
+    if (part.startsWith(".")) part = part.slice(1);
+    part = part.replace(/\.(x{0,3}(?:ix|iv|v?i{0,3}))$/i, "($1)");
+    return part || number;
+  }
+
+  function groupMultipart(questions) {
+    const multipartMap = new Map();
+    const order = [];
+    const seenBases = new Set();
+
+    for (const q of questions) {
+      const baseId = getBaseId(q.number);
+      if (baseId !== null) {
+        if (!seenBases.has(baseId)) {
+          seenBases.add(baseId);
+          multipartMap.set(baseId, []);
+          order.push({ type: "multi", baseId });
+        }
+        multipartMap.get(baseId).push(q);
+      } else {
+        order.push({ type: "single", question: q });
+      }
+    }
+
+    const result = [];
+    for (const entry of order) {
+      if (entry.type === "single") {
+        result.push(entry.question);
+      } else {
+        const { baseId } = entry;
+        const parts = multipartMap.get(baseId).sort((a, b) =>
+          a.number < b.number ? -1 : a.number > b.number ? 1 : 0
+        );
+        const totalMark = parts.reduce((s, p) => s + (p.maxMark || 0), 0) || null;
+        result.push({
+          number: baseId,
+          maxMark: totalMark,
+          questionText: null,
+          choices: [],
+          answer: "",
+          markscheme: null,
+          parts: parts.map((p) => ({
+            id: p.number,
+            part: getPartLabel(p.number, baseId),
+            questionText: p.questionText,
+            markscheme: p.markscheme,
+            maxMark: p.maxMark,
+          })),
+        });
+      }
+    }
+    return result;
   }
 
   // ── API / data loading ─────────────────────────────────────────────────────
@@ -130,7 +237,7 @@
 
     // Fallback: load and parse JSON files directly
     const seen = new Set();
-    const results = [];
+    const parsed = [];
 
     await Promise.all(
       sections.map(async (section) => {
@@ -143,7 +250,7 @@
           for (const item of data) {
             if (seen.has(item.number)) continue;
             seen.add(item.number);
-            results.push(parseQuestion(item));
+            parsed.push(parseQuestion(item));
           }
         } catch (_) {
           // Skip missing files
@@ -151,7 +258,7 @@
       })
     );
 
-    return results;
+    return groupMultipart(parsed);
   }
 
   // ── Rendering ──────────────────────────────────────────────────────────────
@@ -170,34 +277,61 @@
 
   function renderQuestion(q) {
     questionCode.textContent = q.number || "—";
-    questionText.textContent = q.questionText || "";
+    maxMarkEl.textContent = q.maxMark ? `[${q.maxMark}]` : "";
 
-    // Choices
-    choicesList.innerHTML = "";
-    if (q.choices && q.choices.length > 0) {
-      choicesList.hidden = false;
-      q.choices.forEach((choice) => {
-        const li = document.createElement("li");
-        li.className = "choice-item";
+    // Clear question text area
+    questionText.textContent = "";
 
-        // Extract label (A, B, C, D) and text
-        const match = choice.match(/^([A-D])\.\s*([\s\S]*)/);
-        const label = match ? match[1] : "";
-        const text  = match ? match[2].trim() : choice;
+    if (q.parts && q.parts.length > 0) {
+      // Multipart question – render each part
+      choicesList.hidden = true;
+      choicesList.innerHTML = "";
+
+      q.parts.forEach((part) => {
+        const partDiv = document.createElement("div");
+        partDiv.className = "part-item";
 
         const labelSpan = document.createElement("span");
-        labelSpan.className = "choice-label";
-        labelSpan.textContent = label;
+        labelSpan.className = "part-label";
+        labelSpan.textContent = `(${part.part})`;
 
         const textSpan = document.createElement("span");
-        textSpan.textContent = text;
+        textSpan.textContent = part.questionText || "";
 
-        li.appendChild(labelSpan);
-        li.appendChild(textSpan);
-        choicesList.appendChild(li);
+        partDiv.appendChild(labelSpan);
+        partDiv.appendChild(textSpan);
+        questionText.appendChild(partDiv);
       });
     } else {
-      choicesList.hidden = true;
+      // Regular MCQ question
+      questionText.textContent = q.questionText || "";
+
+      choicesList.innerHTML = "";
+      if (q.choices && q.choices.length > 0) {
+        choicesList.hidden = false;
+        q.choices.forEach((choice) => {
+          const li = document.createElement("li");
+          li.className = "choice-item";
+
+          // Extract label (A, B, C, D) and text
+          const match = choice.match(/^([A-D])\.\s*([\s\S]*)/);
+          const label = match ? match[1] : "";
+          const text  = match ? match[2].trim() : choice;
+
+          const labelSpan = document.createElement("span");
+          labelSpan.className = "choice-label";
+          labelSpan.textContent = label;
+
+          const textSpan = document.createElement("span");
+          textSpan.textContent = text;
+
+          li.appendChild(labelSpan);
+          li.appendChild(textSpan);
+          choicesList.appendChild(li);
+        });
+      } else {
+        choicesList.hidden = true;
+      }
     }
 
     // Hide markscheme
@@ -215,21 +349,44 @@
   function showMarkscheme(q) {
     markschemeVisible = true;
 
-    answerDisplay.textContent = q.answer
-      ? `Answer: ${q.answer}`
-      : "Answer: —";
+    if (q.parts && q.parts.length > 0) {
+      // Multipart: show each part's markscheme
+      answerDisplay.textContent = "";
+      markschemeText.textContent = "";
 
-    markschemeText.textContent = q.markscheme || "";
+      q.parts.forEach((part) => {
+        const partDiv = document.createElement("div");
+        partDiv.className = "markscheme-part";
+
+        const labelSpan = document.createElement("span");
+        labelSpan.className = "part-label";
+        labelSpan.textContent = `(${part.part})${part.maxMark ? ` [${part.maxMark}]` : ""}`;
+
+        const msText = document.createElement("p");
+        msText.textContent = part.markscheme || "";
+
+        partDiv.appendChild(labelSpan);
+        partDiv.appendChild(msText);
+        markschemeText.appendChild(partDiv);
+      });
+    } else {
+      answerDisplay.textContent = q.answer
+        ? `Answer: ${q.answer}`
+        : "Answer: —";
+
+      markschemeText.textContent = q.markscheme || "";
+
+      // Highlight correct choice
+      const items = choicesList.querySelectorAll(".choice-item");
+      items.forEach((item) => {
+        const label = item.querySelector(".choice-label");
+        if (label && label.textContent === q.answer) {
+          item.classList.add("correct");
+        }
+      });
+    }
+
     markschemeSection.hidden = false;
-
-    // Highlight correct choice
-    const items = choicesList.querySelectorAll(".choice-item");
-    items.forEach((item) => {
-      const label = item.querySelector(".choice-label");
-      if (label && label.textContent === q.answer) {
-        item.classList.add("correct");
-      }
-    });
   }
 
   function hideMarkscheme() {

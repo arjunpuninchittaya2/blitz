@@ -25,17 +25,39 @@ const DATA_MAP = {
 /**
  * Parse a raw "scraped" string into a structured question object.
  * @param {object} raw  - { number, question, url, scraped }
- * @returns {object}    - { number, questionText, choices, answer, markscheme }
+ * @returns {object}    - { number, questionText, choices, answer, markscheme, maxMark }
  */
 function parseQuestion(raw) {
   const scraped = raw.scraped || "";
+
+  // Extract max mark from "[Maximum mark: X]" (may use non-breaking spaces)
+  const maxMarkMatch = scraped.match(/\[Maximum[\s\u00a0]mark:[\s\u00a0]*(\d+)\]/i);
+  const maxMark = maxMarkMatch ? parseInt(maxMarkMatch[1], 10) : null;
 
   // Split on A. / B. / C. / D. to isolate question text + choice blocks
   const choiceRegex = /(?=\bA\.|\bB\.|\bC\.|\bD\.)/;
   const parts = scraped.split(choiceRegex);
 
   // First segment is the question text (everything before the first choice)
-  const questionText = (parts[0] || raw.question || "").trim();
+  let questionText = (parts[0] || raw.question || "").trim();
+
+  // Strip markscheme section (bleeds into parts[0] for non-MCQ questions)
+  questionText = questionText.replace(/\n?Markscheme[\s\S]*/i, "").trim();
+
+  // Strip preamble: everything up to and including the question ID line
+  if (raw.number) {
+    const escapedId = raw.number.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    questionText = questionText.replace(new RegExp(`^[\\s\\S]*?${escapedId}\\s*\\n?`), "");
+  }
+
+  // Strip part indicator at start like "(a)", "(a(ii))", "(b(iii))"
+  questionText = questionText.replace(/^\s*\([a-z]\d*(?:\([ivxlcdm]+\))?\)\s*/i, "");
+
+  // Strip [N] mark indicators like "[2]"
+  questionText = questionText.replace(/\[\d+\]/g, "");
+
+  // Clean up whitespace
+  questionText = questionText.replace(/\n+/g, " ").trim();
 
   // Extract individual choices (A–D)
   const choices = [];
@@ -68,23 +90,132 @@ function parseQuestion(raw) {
     if (msRaw) markscheme = msRaw[1].trim();
   }
 
+  // Strip examiners report from markscheme (may appear at start or after newline)
+  markscheme = markscheme.replace(/(^|\n)\s*Examiners\s+report[\s\S]*/i, "").trim();
+
   return {
     number: raw.number || "",
-    questionText: questionText.replace(/\n+/g, " ").trim(),
+    questionText,
     choices,
     answer,
     markscheme,
+    maxMark,
   };
 }
 
+// ── Multipart grouping ───────────────────────────────────────────────────────
+
 /**
- * Load, parse, and deduplicate questions for the given section keys.
+ * Get the base question ID for a multipart question.
+ * Returns null for standalone (non-multipart) questions.
+ * e.g. "21N.2.SL.TZ0.5a"    → "21N.2.SL.TZ0.5"
+ *      "22M.2.SL.TZ2.8a(ii)" → "22M.2.SL.TZ2.8"
+ *      "22N.2.SL.TZ0.4a.ii"  → "22N.2.SL.TZ0.4"
+ *      "22M.2.SL.TZ2.a(ii)"  → "22M.2.SL.TZ2"
+ *      "23M.1A.SL.TZ1.1"     → null (standalone MCQ)
+ */
+function getBaseId(number) {
+  const segs = number.split(".");
+  const last = segs[segs.length - 1];
+
+  // Roman numeral sub-part: last segment is "i", "ii", "iii", "iv", "v", etc.
+  if (/^x{0,3}(?:ix|iv|v?i{0,3})$/i.test(last) && last !== "") {
+    const prefix = segs.slice(0, -1);
+    const prevLast = prefix[prefix.length - 1];
+    const baseOfPrev = (prevLast.match(/^(\d*)/) || ["", ""])[1];
+    if (baseOfPrev) {
+      return prefix.slice(0, -1).concat(baseOfPrev).join(".");
+    }
+    return prefix.slice(0, -1).join(".");
+  }
+
+  // Last segment contains a letter: "5a", "5a(ii)", "a", "a(ii)", "4d"
+  if (/[a-z]/i.test(last)) {
+    const baseOfLast = (last.match(/^(\d*)/) || ["", ""])[1];
+    if (baseOfLast) {
+      return segs.slice(0, -1).concat(baseOfLast).join(".");
+    }
+    return segs.slice(0, -1).join(".");
+  }
+
+  return null; // Standalone question
+}
+
+/**
+ * Extract the part label from a full question ID given its base ID.
+ * e.g. "21N.2.SL.TZ0.5a",   base "21N.2.SL.TZ0.5" → "a"
+ *      "22M.2.SL.TZ2.8a(ii)", base "22M.2.SL.TZ2.8" → "a(ii)"
+ *      "22N.2.SL.TZ0.4a.ii",  base "22N.2.SL.TZ0.4" → "a(ii)"
+ */
+function getPartLabel(number, baseId) {
+  let part = number.slice(baseId.length);
+  if (part.startsWith(".")) part = part.slice(1);
+  // Normalise "a.ii" → "a(ii)": trailing .roman segment
+  part = part.replace(/\.(x{0,3}(?:ix|iv|v?i{0,3}))$/i, "($1)");
+  return part || number;
+}
+
+/**
+ * Group multipart questions (sharing the same base ID) into a single object.
+ * Standalone MCQ questions pass through unchanged.
+ */
+function groupMultipart(questions) {
+  const multipartMap = new Map(); // baseId → [question, ...]
+  const order = []; // first-occurrence insertion order
+  const seenBases = new Set();
+
+  for (const q of questions) {
+    const baseId = getBaseId(q.number);
+    if (baseId !== null) {
+      if (!seenBases.has(baseId)) {
+        seenBases.add(baseId);
+        multipartMap.set(baseId, []);
+        order.push({ type: "multi", baseId });
+      }
+      multipartMap.get(baseId).push(q);
+    } else {
+      order.push({ type: "single", question: q });
+    }
+  }
+
+  const result = [];
+  for (const entry of order) {
+    if (entry.type === "single") {
+      result.push(entry.question);
+    } else {
+      const { baseId } = entry;
+      const parts = multipartMap.get(baseId).sort((a, b) =>
+        a.number < b.number ? -1 : a.number > b.number ? 1 : 0
+      );
+      const totalMark = parts.reduce((s, p) => s + (p.maxMark || 0), 0) || null;
+      result.push({
+        number: baseId,
+        maxMark: totalMark,
+        questionText: null,
+        choices: [],
+        answer: "",
+        markscheme: null,
+        parts: parts.map((p) => ({
+          id: p.number,
+          part: getPartLabel(p.number, baseId),
+          questionText: p.questionText,
+          markscheme: p.markscheme,
+          maxMark: p.maxMark,
+        })),
+      });
+    }
+  }
+  return result;
+}
+
+/**
+ * Load, parse, deduplicate, and group questions for the given section keys.
  * @param {string[]} sections - e.g. ["structure1", "reactivity2"]
  * @returns {object[]}
  */
 function loadQuestions(sections) {
   const seen = new Set();
-  const results = [];
+  const parsed = [];
 
   for (const section of sections) {
     const raw = DATA_MAP[section];
@@ -92,11 +223,11 @@ function loadQuestions(sections) {
     for (const item of raw) {
       if (seen.has(item.number)) continue;
       seen.add(item.number);
-      results.push(parseQuestion(item));
+      parsed.push(parseQuestion(item));
     }
   }
 
-  return results;
+  return groupMultipart(parsed);
 }
 
 // ── CORS helper ──────────────────────────────────────────────────────────────
