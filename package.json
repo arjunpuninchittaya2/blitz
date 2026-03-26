@@ -2,12 +2,11 @@
   "name": "blitz",
   "version": "1.0.0",
   "description": "Blitz – a fast, minimal, monochrome study app powered by Cloudflare Workers",
-  "private": true,
   "scripts": {
     "build:client": "vite build",
     "dev:client": "vite",
     "dev": "npm run build:client && wrangler dev",
-    "deploy": "npm run build:client && wrangler deploy",
+    "deploy": "npm run build:client && wrangler publish",
     "preview": "npx serve dist"
   },
   "dependencies": {
