@@ -3,8 +3,6 @@
  * Serves static frontend assets and provides the /api/questions endpoint.
  */
 
-import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
-
 // ── Inline data imports (bundled at deploy time via wrangler) ───────────────
 import structure1Data from "./data/structure1.json";
 import structure2Data from "./data/structure2.json";
@@ -159,27 +157,8 @@ async function handleRequest(request, env, ctx) {
     });
   }
 
-  // ── Static assets via KV ─────────────────────────────────────────────────
-  try {
-    return await getAssetFromKV(
-      { request, waitUntil: ctx.waitUntil.bind(ctx) },
-      { ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST }
-    );
-  } catch {
-    // Fall back to index.html for SPA-style routing
-    try {
-      const indexRequest = new Request(
-        new URL("/index.html", request.url).toString(),
-        request
-      );
-      return await getAssetFromKV(
-        { request: indexRequest, waitUntil: ctx.waitUntil.bind(ctx) },
-        { ASSET_NAMESPACE: env.__STATIC_CONTENT, ASSET_MANIFEST: env.__STATIC_CONTENT_MANIFEST }
-      );
-    } catch {
-      return new Response("Not Found", { status: 404 });
-    }
-  }
+  // ── Static assets via Assets binding ────────────────────────────────────
+  return env.ASSETS.fetch(request);
 }
 
 export default {
